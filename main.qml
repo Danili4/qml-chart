@@ -8,12 +8,7 @@ Window {
     minimumHeight: 600
     color: "white"
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            Qt.quit();
-        }
-    }
+
 
     Rectangle{
         id: chart
@@ -53,6 +48,18 @@ Window {
         height:parent.height
         width: 30
         color:"blue"
+        property real scaleFactor: 1.0
+
+        MouseArea {
+            anchors.fill:parent
+            onWheel: {
+                if (wheel.angleDelta.y > 0)
+                    parent.scaleFactor +=0.1
+                else
+                    parent.scaleFactor -=0.1
+                canvas1.requestPaint()
+            }
+        }
     }
 
 Rectangle {
@@ -68,13 +75,14 @@ Rectangle {
 
             onPaint: {
                 var ctx = getContext("2d")
+                ctx.clearRect(0, 0, canvas1.width, canvas1.height)
                 ctx.fillStyle = "green"
                 ctx.strokeStyle="blue"
                 ctx.lineWidth=2
                 ctx.beginPath()
-                ctx.moveTo(10,10)
-                ctx.lineTo(100,150)
-                ctx.lineTo(500, 150)
+                ctx.moveTo(10*av_axisX.scaleFactor, 10*v_axisY.scaleFactor)
+                ctx.lineTo(100*av_axisX.scaleFactor, 150*v_axisY.scaleFactor)
+                ctx.lineTo(500*av_axisX.scaleFactor, 150*v_axisY.scaleFactor)
                 ctx.stroke()
             }
 
@@ -112,6 +120,18 @@ Rectangle {
             height: parent.height
             width: 30
             color: "blue"
+            property real scaleFactor: 1.0
+
+            MouseArea {
+                anchors.fill:parent
+                onWheel: {
+                    if (wheel.angleDelta.y > 0)
+                        parent.scaleFactor +=0.1
+                    else
+                        parent.scaleFactor -=0.1
+                    canvas2.requestPaint()
+                }
+            }
         }
         Rectangle {
             anchors.right:parent.right
@@ -126,13 +146,14 @@ Rectangle {
 
                     onPaint: {
                         var ctx = getContext("2d")
+                        ctx.clearRect(0, 0, canvas2.width, canvas2.height)
                         ctx.fillStyle = "green"
                         ctx.strokeStyle="blue"
                         ctx.lineWidth=2
                         ctx.beginPath()
-                        ctx.moveTo(10,10)
-                        ctx.lineTo(100,150)
-                        ctx.lineTo(500, 150)
+                        ctx.moveTo(10*av_axisX.scaleFactor, 10*a_axisY.scaleFactor)
+                        ctx.lineTo(100*av_axisX.scaleFactor, 150*a_axisY.scaleFactor)
+                        ctx.lineTo(500*av_axisX.scaleFactor, 150*a_axisY.scaleFactor)
                         ctx.stroke()
                     }
 
@@ -145,6 +166,19 @@ Rectangle {
             anchors.right: parent.right
             height:30
             color:"green"
+            property real scaleFactor: 1.0
+
+            MouseArea {
+                anchors.fill:parent
+                onWheel: {
+                    if (wheel.angleDelta.y > 0)
+                        parent.scaleFactor +=0.1
+                    else
+                        parent.scaleFactor -=0.1
+                    canvas1.requestPaint()
+                    canvas2.requestPaint()
+                }
+            }
 
         }
         Rectangle {
