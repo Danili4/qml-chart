@@ -171,13 +171,36 @@ Rectangle {
                     onPaint: {
                         var ctx = getContext("2d")
                         ctx.clearRect(0, 0, canvas2.width, canvas2.height)
-                        ctx.fillStyle = "green"
+                        drawAxis(ctx, canvas2.width, canvas2.height, av_axisX.scaleFactor, a_axisY.scaleFactor)
+                        drawLines(ctx, av_axisX.scaleFactor, v_axisY.scaleFactor)
+                    }
+
+                    function drawAxis(ctx, width, height, xf, yf) {
+                        ctx.strokeStyle = "white"
+                        ctx.lineWidth = 1
+                        for(var i=0;;i++) {
+                            if((xf*40.5+xf*i*40) > width) break;
+                            ctx.beginPath()
+                            ctx.moveTo(xf*40.5+xf*i*40, 0)
+                            ctx.lineTo(xf*40.5+xf*i*40, height)
+                            ctx.stroke()
+                        }
+                        for(var i=0;;i++) {
+                            if((height - (yf*40.5+yf*i*40)) < 0) break;
+                            ctx.beginPath()
+                            ctx.moveTo(0, height - (yf*40.5+yf*i*40))
+                            ctx.lineTo(width, height - (yf*40.5+yf*i*40))
+                            ctx.stroke()
+                        }
+                    }
+
+                    function drawLines(ctx, xf, yf) {
                         ctx.strokeStyle="blue"
                         ctx.lineWidth=2
                         ctx.beginPath()
-                        ctx.moveTo(10*av_axisX.scaleFactor, 10*a_axisY.scaleFactor)
-                        ctx.lineTo(100*av_axisX.scaleFactor, 150*a_axisY.scaleFactor)
-                        ctx.lineTo(500*av_axisX.scaleFactor, 150*a_axisY.scaleFactor)
+                        ctx.moveTo(10*xf, 10*yf)
+                        ctx.lineTo(100*xf, 150*yf)
+                        ctx.lineTo(500*xf, 150*yf)
                         ctx.stroke()
                     }
 
