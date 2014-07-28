@@ -78,6 +78,14 @@ Rectangle {
                 ctx.clearRect(0, 0, canvas1.width, canvas1.height)
                 drawAxis(ctx, canvas1.width, canvas1.height, av_axisX.scaleFactor, v_axisY.scaleFactor)
                 drawLines(ctx, av_axisX.scaleFactor, v_axisY.scaleFactor)
+                drawText(ctx, 30, 50)
+
+            }
+
+            function drawText(ctx, x, y) {
+                ctx.fillStyle = "#00F"
+                ctx.font = "italic 30pt Arial"
+                ctx.fillText("Text here!", x, y)
             }
 
             function drawAxis(ctx, width, height, xf, yf) {
