@@ -187,12 +187,34 @@ Rectangle {
                 Canvas {
                     id: canvas2
                     anchors.fill: parent
+                    property real scaleFactor: 1.0
+                    property real scaleMax: 2.0
+                    property real scaleMin: 0.5
+
+                    MouseArea {
+                        id: canvas_a
+                        anchors.bottom: parent.bottom
+                        anchors.top: parent.top
+                        anchors.left: parent.left
+                        width: 30
+                        onWheel: {
+                            if (wheel.angleDelta.y > 0)
+                                parent.scaleFactor +=0.1
+                            else
+                                parent.scaleFactor -=0.1
+                            if (parent.scaleFactor > parent.scaleMax)
+                                parent.scaleFactor = parent.scaleMax
+                            if (parent.scaleFactor < parent.scaleMin)
+                                parent.scaleFactor = parent.scaleMin
+                            canvas2.requestPaint()
+                        }
+                    }
 
                     onPaint: {
                         var ctx = getContext("2d")
                         ctx.clearRect(0, 0, canvas2.width, canvas2.height)
-                        drawAxis(ctx, canvas2.width, canvas2.height, av_axisX.scaleFactor, a_axisY.scaleFactor)
-                        drawLines(ctx, av_axisX.scaleFactor, v_axisY.scaleFactor)
+                        drawAxis(ctx, canvas2.width, canvas2.height, av_axisX.scaleFactor, canvas2.scaleFactor)
+                        drawLines(ctx, av_axisX.scaleFactor, canvas2.scaleFactor)
                     }
 
                     function drawAxis(ctx, width, height, xf, yf) {
