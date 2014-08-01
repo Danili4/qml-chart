@@ -49,6 +49,8 @@ Window {
         width: 30
         color:"blue"
         property real scaleFactor: 1.0
+        property real scaleMax: 2.0
+        property real scaleMin: 0.5
 
         MouseArea {
             anchors.fill:parent
@@ -57,6 +59,10 @@ Window {
                     parent.scaleFactor +=0.1
                 else
                     parent.scaleFactor -=0.1
+                if (parent.scaleFactor > parent.scaleMax)
+                    parent.scaleFactor = parent.scaleMax
+                if (parent.scaleFactor < parent.scaleMin)
+                    parent.scaleFactor = parent.scaleMin
                 canvas1.requestPaint()
             }
         }
@@ -153,6 +159,8 @@ Rectangle {
             width: 30
             color: "blue"
             property real scaleFactor: 1.0
+            property real scaleMax: 2.0
+            property real scaleMin: 0.5
 
             MouseArea {
                 anchors.fill:parent
@@ -161,6 +169,10 @@ Rectangle {
                         parent.scaleFactor +=0.1
                     else
                         parent.scaleFactor -=0.1
+                    if (parent.scaleFactor > parent.scaleMax)
+                        parent.scaleFactor = parent.scaleMax
+                    if (parent.scaleFactor < parent.scaleMin)
+                        parent.scaleFactor = parent.scaleMin
                     canvas2.requestPaint()
                 }
             }
@@ -222,6 +234,8 @@ Rectangle {
             height:30
             color:"green"
             property real scaleFactor: 1.0
+            property real scaleMin: 0.5
+            property real scaleMax: 2.0
 
             MouseArea {
                 anchors.fill:parent
@@ -230,6 +244,10 @@ Rectangle {
                         parent.scaleFactor +=0.1
                     else
                         parent.scaleFactor -=0.1
+                    if (parent.scaleFactor > parent.scaleMax)
+                        parent.scaleFactor = parent.scaleMax
+                    if (parent.scaleFactor < parent.scaleMin)
+                        parent.scaleFactor = parent.scaleMin
                     canvas1.requestPaint()
                     canvas2.requestPaint()
                 }
