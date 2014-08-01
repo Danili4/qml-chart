@@ -90,7 +90,8 @@ Rectangle {
 
             function drawText(ctx, x, y) {
                 ctx.fillStyle = "#00F"
-                ctx.font = "italic 30pt Arial"
+                ctx.textBaseline = "top hanging"
+                ctx.font = "italic 10pt Arial"
                 ctx.fillText("Text here!", x, y)
             }
 
@@ -213,6 +214,8 @@ Rectangle {
                             ctx.moveTo(30.5, height - (0.5+yf*i*40))
                             ctx.lineTo(width, height - (0.5+yf*i*40))
                             ctx.stroke()
+                            ctx.moveTo(30.5, height - (0.5+yf*i*40))
+                            drawText(ctx, (0.5+i*40).toFixed(1).toString(), 29.5, height - (0.5+yf*i*40))
                         }
                         ctx.beginPath()
                         ctx.moveTo(30.5, 0.5)
@@ -229,11 +232,19 @@ Rectangle {
                         ctx.strokeStyle="blue"
                         ctx.lineWidth=2
                         ctx.beginPath()
-                        ctx.moveTo(10*xf, 10*yf)
-                        ctx.lineTo(100*xf, 150*yf)
-                        ctx.lineTo(500*xf, 150*yf)
+                        ctx.moveTo(30.5+10*xf, height-10*yf)
+                        ctx.lineTo(30.5+100*xf, height-150*yf)
+                        ctx.lineTo(30.5+500*xf, height-150*yf)
                         ctx.stroke()
                         ctx.restore()
+                    }
+
+                    function drawText(ctx, text, x, y) {
+                        ctx.fillStyle = "#00F"
+                        ctx.textBaseline = "top hanging"
+                        ctx.textAlign = "right"
+                        ctx.font = "italic 10pt Arial"
+                        ctx.fillText(text, x, y)
                     }
 
                 }
