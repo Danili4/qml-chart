@@ -151,43 +151,18 @@ Rectangle {
                     transform: Rotation {origin.x: text2.width/2; origin.y: text2.height/2; angle: 270;}
                 }
         }
-        Rectangle {
-            id:a_axisY
-            anchors.left:caption2.right
-            anchors.top: parent.top
-            height: parent.height
-            width: 30
-            color: "blue"
-            property real scaleFactor: 1.0
-            property real scaleMax: 2.0
-            property real scaleMin: 0.5
 
-            MouseArea {
-                anchors.fill:parent
-                onWheel: {
-                    if (wheel.angleDelta.y > 0)
-                        parent.scaleFactor +=0.1
-                    else
-                        parent.scaleFactor -=0.1
-                    if (parent.scaleFactor > parent.scaleMax)
-                        parent.scaleFactor = parent.scaleMax
-                    if (parent.scaleFactor < parent.scaleMin)
-                        parent.scaleFactor = parent.scaleMin
-                    canvas2.requestPaint()
-                }
-            }
-        }
         Rectangle {
             anchors.right:parent.right
             anchors.top:parent.top
             anchors.bottom: av_axisX.top
-            anchors.left: a_axisY.right
+            anchors.left: caption2.right
             color:"gray"
 
                 Canvas {
                     id: canvas2
                     anchors.fill: parent
-                    property real scaleFactor: 1.0
+                    property real scaleFactorY: 1.0
                     property real scaleMax: 2.0
                     property real scaleMin: 0.5
 
@@ -199,13 +174,13 @@ Rectangle {
                         width: 30
                         onWheel: {
                             if (wheel.angleDelta.y > 0)
-                                parent.scaleFactor +=0.1
+                                parent.scaleFactorY +=0.1
                             else
-                                parent.scaleFactor -=0.1
-                            if (parent.scaleFactor > parent.scaleMax)
-                                parent.scaleFactor = parent.scaleMax
-                            if (parent.scaleFactor < parent.scaleMin)
-                                parent.scaleFactor = parent.scaleMin
+                                parent.scaleFactorY -=0.1
+                            if (parent.scaleFactorY > parent.scaleMax)
+                                parent.scaleFactorY = parent.scaleMax
+                            if (parent.scaleFactorY < parent.scaleMin)
+                                parent.scaleFactorY = parent.scaleMin
                             canvas2.requestPaint()
                         }
                     }
@@ -213,27 +188,35 @@ Rectangle {
                     onPaint: {
                         var ctx = getContext("2d")
                         ctx.clearRect(0, 0, canvas2.width, canvas2.height)
-                        drawAxis(ctx, canvas2.width, canvas2.height, av_axisX.scaleFactor, canvas2.scaleFactor)
-                        drawLines(ctx, av_axisX.scaleFactor, canvas2.scaleFactor)
+                        drawAxis(ctx, canvas2.width, canvas2.height, av_axisX.scaleFactor, canvas2.scaleFactorY)
+                        drawLines(ctx, av_axisX.scaleFactor, canvas2.scaleFactorY)
                     }
 
                     function drawAxis(ctx, width, height, xf, yf) {
                         ctx.strokeStyle = "white"
                         ctx.lineWidth = 1
                         for(var i=0;;i++) {
-                            if((xf*40.5+xf*i*40) > width) break;
+                            if((30.5+xf*i*40) > width) break;
                             ctx.beginPath()
-                            ctx.moveTo(xf*40.5+xf*i*40, 0)
-                            ctx.lineTo(xf*40.5+xf*i*40, height)
+                            ctx.moveTo(30.5+xf*i*40, 0)
+                            ctx.lineTo(30.5+xf*i*40, height)
                             ctx.stroke()
                         }
+                        ctx.beginPath()
+                        ctx.moveTo(width-0.5, 0.5)
+                        ctx.lineTo(width-0.5, height-0.5)
+                        ctx.stroke()
                         for(var i=0;;i++) {
-                            if((height - (yf*40.5+yf*i*40)) < 0) break;
+                            if((height - (0.5+yf*i*40)) < 0) break;
                             ctx.beginPath()
-                            ctx.moveTo(0, height - (yf*40.5+yf*i*40))
-                            ctx.lineTo(width, height - (yf*40.5+yf*i*40))
+                            ctx.moveTo(30.5, height - (0.5+yf*i*40))
+                            ctx.lineTo(width, height - (0.5+yf*i*40))
                             ctx.stroke()
                         }
+                        ctx.beginPath()
+                        ctx.moveTo(30.5, 0.5)
+                        ctx.lineTo(width, 0.5)
+                        ctx.stroke()
                     }
 
                     function drawLines(ctx, xf, yf) {
@@ -251,7 +234,7 @@ Rectangle {
         Rectangle {
             id: av_axisX
             anchors.bottom: time_caption.top
-            anchors.left: a_axisY.right
+            anchors.left: caption2.right
             anchors.right: parent.right
             height:30
             color:"green"
@@ -279,7 +262,7 @@ Rectangle {
         Rectangle {
             id:time_caption
             anchors.bottom: parent.bottom
-            anchors.left:a_axisY.right
+            anchors.left: caption2.right
             anchors.right: parent.right
             height: 20
             color: "red"
