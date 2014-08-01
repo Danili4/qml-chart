@@ -189,7 +189,7 @@ Rectangle {
                         var ctx = getContext("2d")
                         ctx.clearRect(0, 0, canvas2.width, canvas2.height)
                         drawAxis(ctx, canvas2.width, canvas2.height, av_axisX.scaleFactor, canvas2.scaleFactorY)
-                        drawLines(ctx, av_axisX.scaleFactor, canvas2.scaleFactorY)
+                        drawLines(ctx, canvas2.width, canvas2.height, av_axisX.scaleFactor, canvas2.scaleFactorY)
                     }
 
                     function drawAxis(ctx, width, height, xf, yf) {
@@ -219,7 +219,12 @@ Rectangle {
                         ctx.stroke()
                     }
 
-                    function drawLines(ctx, xf, yf) {
+                    function drawLines(ctx, width, height, xf, yf) {
+                        ctx.save()
+                        ctx.beginPath()
+                        ctx.rect(30.5, 0.5, width-32.5, height-2.5)
+                        ctx.clip()
+
                         ctx.strokeStyle="blue"
                         ctx.lineWidth=2
                         ctx.beginPath()
@@ -227,6 +232,7 @@ Rectangle {
                         ctx.lineTo(100*xf, 150*yf)
                         ctx.lineTo(500*xf, 150*yf)
                         ctx.stroke()
+                        ctx.restore()
                     }
 
                 }
