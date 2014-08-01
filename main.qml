@@ -153,6 +153,7 @@ Rectangle {
         }
 
         Rectangle {
+            id: drawingArea2
             anchors.right:parent.right
             anchors.top:parent.top
             anchors.bottom: av_axisX.top
@@ -238,9 +239,18 @@ Rectangle {
                 }
         }
         Rectangle {
+            id: emptyBlock
+            anchors.top: drawingArea2.bottom
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+            width: 50
+            color: "gray"
+        }
+
+        Rectangle {
             id: av_axisX
             anchors.bottom: time_caption.top
-            anchors.left: caption2.right
+            anchors.left: emptyBlock.right
             anchors.right: parent.right
             height:30
             color:"green"
@@ -268,7 +278,7 @@ Rectangle {
         Rectangle {
             id:time_caption
             anchors.bottom: parent.bottom
-            anchors.left: caption2.right
+            anchors.left: emptyBlock.right
             anchors.right: parent.right
             height: 20
             color: "red"
